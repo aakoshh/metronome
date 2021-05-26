@@ -20,8 +20,9 @@ import org.scalatest.Inspectors
 import org.scalatest.matchers.should.Matchers
 import scala.reflect.ClassTag
 
-class RobotCompositionSpec extends AnyFlatSpec with Matchers {
-  import RobotCompositionSpec._
+/** Set up an in-memory federation with simulated network stack and elapsed time. */
+class RobotIntegrationSpec extends AnyFlatSpec with Matchers {
+  import RobotIntegrationSpec._
 
   def test(fixture: Fixture): Assertion = {
     implicit val scheduler = fixture.scheduler
@@ -36,6 +37,7 @@ class RobotCompositionSpec extends AnyFlatSpec with Matchers {
     fut.value.getOrElse(sys.error("The test hasn't finished")).get
   }
 
+  // Use this to debug tests.
   def printLogs(logs: List[Seq[HybridLogObject]]): Unit = {
     logs.zipWithIndex
       .flatMap { case (logs, i) =>
@@ -75,7 +77,7 @@ class RobotCompositionSpec extends AnyFlatSpec with Matchers {
   }
 }
 
-object RobotCompositionSpec {
+object RobotIntegrationSpec {
 
   abstract class Fixture(val duration: FiniteDuration)
       extends RobotComposition {
